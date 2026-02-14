@@ -14,9 +14,9 @@ const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <div className="flex items-center gap-2.5 mb-3">
-              <img src={lactariumLogo} alt="Lactarium logo" className="h-8 w-8 rounded-lg object-contain brightness-0 invert" />
-              <span className="text-xl font-display font-bold text-primary-foreground tracking-wide">LACTARIUM</span>
+            <div className="flex items-center gap-2 mb-3">
+              <img src={lactariumLogo} alt="Lactarium logo" className="h-8 w-8 rounded-md object-contain brightness-0 invert" />
+              <span className="text-lg font-display font-extrabold text-primary-foreground tracking-[0.15em] uppercase">LACTARIUM</span>
             </div>
             <p className="text-sm font-body text-primary-foreground/60 mt-3 max-w-xs">
               Espacios seguros y certificados para una mejor lactancia. Fabricados en Monterrey, Nuevo León.
