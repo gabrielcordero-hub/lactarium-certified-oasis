@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import lactariumLogo from "@/assets/lactarium-logo.png";
 
 const navItems = [
   { label: "Inicio", href: "#inicio" },
@@ -16,8 +17,9 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="#inicio" className="flex items-center gap-2">
-          <span className="text-2xl font-display font-bold text-gradient-hero">LACTARIUM</span>
+        <a href="#inicio" className="flex items-center gap-2.5">
+          <img src={lactariumLogo} alt="Lactarium logo" className="h-9 w-9 rounded-lg object-contain" />
+          <span className="text-xl font-display font-bold text-gradient-hero tracking-wide">LACTARIUM</span>
         </a>
 
         {/* Desktop nav */}
