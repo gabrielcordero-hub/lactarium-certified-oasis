@@ -1,80 +1,48 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Quote, ChevronLeft, ChevronRight, Shield, Award, Heart } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { translations } from "@/i18n/translations";
 
-const testimonials = [
-  {
-    type: "story" as const,
-    name: "María González",
-    role: "Directora de RH",
-    company: "Grupo Industrial MTY",
-    text: "Instalar el lactario de LACTARIUM transformó nuestra cultura organizacional. Nuestras colaboradoras se sienten apoyadas y valoradas. La calidad de los materiales es excepcional.",
-    rating: 5,
-  },
-  {
-    type: "cert" as const,
-    icon: Shield,
-    title: "Secretaría de Salud NL",
-    text: "Certificados por la Secretaría de Salud del Estado de Nuevo León, garantizando los más altos estándares de higiene y seguridad en cada uno de nuestros productos.",
-    badge: "Certificación Estatal",
-  },
-  {
-    type: "story" as const,
-    name: "Ana Rodríguez",
-    role: "Gerente de Bienestar",
-    company: "Hospital Universitario",
-    text: "La certificación OMS y UNICEF fue clave para elegir LACTARIUM. El proceso de instalación fue impecable y el resultado superó nuestras expectativas.",
-    rating: 5,
-  },
-  {
-    type: "cert" as const,
-    icon: Award,
-    title: "Organización Mundial de la Salud",
-    text: "Primeros lactarios en México certificados por la OMS, cumpliendo con lineamientos internacionales de salud materno-infantil. Un reconocimiento al compromiso con la calidad.",
-    badge: "Certificación Internacional",
-  },
-  {
-    type: "story" as const,
-    name: "Laura Martínez",
-    role: "CEO",
-    company: "TechNL Solutions",
-    text: "El cubo móvil nos dio la flexibilidad que necesitábamos. Lo reubicamos según nuestras necesidades y siempre se ve profesional. Totalmente recomendable.",
-    rating: 5,
-  },
-  {
-    type: "cert" as const,
-    icon: Heart,
-    title: "UNICEF",
-    text: "Reconocidos por UNICEF como espacios que promueven y protegen la lactancia materna, un derecho fundamental de madre e hijo.",
-    badge: "Reconocimiento Global",
-  },
-];
+const certIcons = [Shield, Award, Heart];
 
 const Testimonials = () => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
+  const { t } = useLanguage();
+  const tt = translations.testimonials;
+  const items = tt.items;
 
   const next = useCallback(() => {
     setDirection(1);
-    setCurrent((p) => (p + 1) % testimonials.length);
-  }, []);
+    setCurrent((p) => (p + 1) % items.length);
+  }, [items.length]);
 
   const prev = useCallback(() => {
     setDirection(-1);
-    setCurrent((p) => (p - 1 + testimonials.length) % testimonials.length);
-  }, []);
+    setCurrent((p) => (p - 1 + items.length) % items.length);
+  }, [items.length]);
 
   useEffect(() => {
     const timer = setInterval(next, 6000);
     return () => clearInterval(timer);
   }, [next]);
 
-  const item = testimonials[current];
+  const item = items[current];
 
   const variants = {
     enter: (d: number) => ({ x: d > 0 ? 200 : -200, opacity: 0 }),
     center: { x: 0, opacity: 1 },
     exit: (d: number) => ({ x: d > 0 ? -200 : 200, opacity: 0 }),
+  };
+
+  // Find cert icon index (certs are at indices 1, 3, 5)
+  const getCertIconIndex = () => {
+    const certIndices = items.reduce<number[]>((acc, it, i) => {
+      if (it.type === "cert") acc.push(i);
+      return acc;
+    }, []);
+    return certIndices.indexOf(current);
   };
 
   return (
@@ -88,34 +56,32 @@ const Testimonials = () => {
           className="text-center mb-16"
         >
           <span className="text-sm font-body font-semibold text-accent uppercase tracking-widest">
-            Confianza comprobada
+            {t(tt.label)}
           </span>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-3">
-            Certificaciones y testimonios
+            {t(tt.title)}
           </h2>
           <p className="text-muted-foreground font-body mt-4 max-w-xl mx-auto">
-            Respaldados por organismos internacionales y la confianza de nuestros clientes.
+            {t(tt.subtitle)}
           </p>
         </motion.div>
 
         <div className="relative max-w-3xl mx-auto">
-          {/* Arrows */}
           <button
             onClick={prev}
             className="absolute -left-4 md:-left-14 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
-            aria-label="Anterior"
+            aria-label={t(tt.prev)}
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={next}
             className="absolute -right-4 md:-right-14 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-card border border-border shadow-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
-            aria-label="Siguiente"
+            aria-label={t(tt.next)}
           >
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Card */}
           <div className="overflow-hidden min-h-[280px] flex items-center">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
@@ -137,28 +103,34 @@ const Testimonials = () => {
                       ))}
                     </div>
                     <p className="font-body text-base text-muted-foreground leading-relaxed mb-6 max-w-xl mx-auto">
-                      "{item.text}"
+                      "{t(item.text)}"
                     </p>
                     <div className="border-t border-border pt-4 inline-block">
                       <p className="font-body font-semibold text-foreground text-sm">{item.name}</p>
                       <p className="font-body text-xs text-muted-foreground">
-                        {item.role} · {item.company}
+                        {t(item.role)} · {item.company}
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div className="bg-card rounded-2xl p-8 md:p-10 shadow-card border border-primary/20 text-center">
-                    <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-teal-light flex items-center justify-center">
-                      <item.icon className="w-7 h-7 text-primary" />
-                    </div>
+                    {(() => {
+                      const iconIdx = getCertIconIndex();
+                      const Icon = certIcons[iconIdx >= 0 ? iconIdx : 0];
+                      return (
+                        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-teal-light flex items-center justify-center">
+                          <Icon className="w-7 h-7 text-primary" />
+                        </div>
+                      );
+                    })()}
                     <span className="inline-block px-3 py-1 text-xs font-body font-semibold rounded-full bg-primary/10 text-primary mb-4">
-                      {item.badge}
+                      {t(item.badge)}
                     </span>
                     <h3 className="text-xl font-display font-bold text-foreground mb-3">
-                      {item.title}
+                      {t(item.title)}
                     </h3>
                     <p className="font-body text-base text-muted-foreground leading-relaxed max-w-xl mx-auto">
-                      {item.text}
+                      {t(item.text)}
                     </p>
                   </div>
                 )}
@@ -166,20 +138,19 @@ const Testimonials = () => {
             </AnimatePresence>
           </div>
 
-          {/* Dots */}
           <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((t, i) => (
+            {items.map((itm, i) => (
               <button
                 key={i}
                 onClick={() => {
                   setDirection(i > current ? 1 : -1);
                   setCurrent(i);
                 }}
-                aria-label={`Ir a slide ${i + 1}`}
+                aria-label={`Slide ${i + 1}`}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   i === current
                     ? "w-8 bg-primary"
-                    : t.type === "cert"
+                    : itm.type === "cert"
                     ? "w-2 bg-primary/30"
                     : "w-2 bg-muted-foreground/30"
                 }`}

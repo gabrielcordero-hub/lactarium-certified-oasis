@@ -2,17 +2,21 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import BrandLogo from "@/components/BrandLogo";
-
-const navItems = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Productos", href: "#productos" },
-  { label: "Certificaciones", href: "#certificaciones" },
-  { label: "Proceso", href: "#proceso" },
-  { label: "Contacto", href: "#contacto" },
-];
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { translations } from "@/i18n/translations";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
+
+  const navItems = [
+    { label: t(translations.nav.home), href: "#inicio" },
+    { label: t(translations.nav.products), href: "#productos" },
+    { label: t(translations.nav.certifications), href: "#certificaciones" },
+    { label: t(translations.nav.process), href: "#proceso" },
+    { label: t(translations.nav.contact), href: "#contacto" },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -25,18 +29,19 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
             <a
-              key={item.label}
+              key={item.href}
               href={item.href}
               className="text-sm font-body font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               {item.label}
             </a>
           ))}
+          <LanguageSwitcher />
           <a
             href="#contacto"
             className="px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-body font-semibold hover:opacity-90 transition-opacity"
           >
-            Cotizar ahora
+            {t(translations.nav.cta)}
           </a>
         </div>
 
@@ -62,7 +67,7 @@ const Navbar = () => {
             <div className="px-6 py-4 flex flex-col gap-4">
               {navItems.map((item) => (
                 <a
-                  key={item.label}
+                  key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className="text-sm font-body font-medium text-muted-foreground hover:text-primary transition-colors"
@@ -70,12 +75,13 @@ const Navbar = () => {
                   {item.label}
                 </a>
               ))}
+              <LanguageSwitcher />
               <a
                 href="#contacto"
                 onClick={() => setIsOpen(false)}
                 className="px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-body font-semibold text-center"
               >
-                Cotizar ahora
+                {t(translations.nav.cta)}
               </a>
             </div>
           </motion.div>
