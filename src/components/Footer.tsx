@@ -1,8 +1,17 @@
+import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+
+const socialLinks = [
+  { icon: Facebook, href: "https://facebook.com/lactarium", label: "Facebook" },
+  { icon: Instagram, href: "https://instagram.com/lactarium", label: "Instagram" },
+  { icon: Linkedin, href: "https://linkedin.com/company/lactarium", label: "LinkedIn" },
+  { icon: Youtube, href: "https://youtube.com/@lactarium", label: "YouTube" },
+];
+
 const Footer = () => {
   return (
     <footer className="py-12 bg-foreground">
       <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
             <span className="text-2xl font-display font-bold text-primary-foreground">
               LACTARIUM
@@ -10,6 +19,20 @@ const Footer = () => {
             <p className="text-sm font-body text-primary-foreground/60 mt-3 max-w-xs">
               Espacios seguros y certificados para una mejor lactancia. Fabricados en Monterrey, Nuevo León.
             </p>
+            <div className="flex gap-3 mt-5">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="w-9 h-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary/80 transition-colors"
+                >
+                  <s.icon className="w-4 h-4 text-primary-foreground" />
+                </a>
+              ))}
+            </div>
           </div>
           <div>
             <h4 className="font-body font-semibold text-primary-foreground mb-4">Productos</h4>
@@ -24,7 +47,29 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><a href="#certificaciones" className="text-sm font-body text-primary-foreground/60 hover:text-primary-foreground transition-colors">Certificaciones</a></li>
               <li><a href="#proceso" className="text-sm font-body text-primary-foreground/60 hover:text-primary-foreground transition-colors">Proceso</a></li>
+              <li><a href="#testimoniales" className="text-sm font-body text-primary-foreground/60 hover:text-primary-foreground transition-colors">Testimonios</a></li>
               <li><a href="#contacto" className="text-sm font-body text-primary-foreground/60 hover:text-primary-foreground transition-colors">Contacto</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-body font-semibold text-primary-foreground mb-4">Síguenos</h4>
+            <p className="text-sm font-body text-primary-foreground/60 mb-4">
+              Mantente al día con nuestras novedades y proyectos en redes sociales.
+            </p>
+            <ul className="space-y-2">
+              {socialLinks.map((s) => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-body text-primary-foreground/60 hover:text-primary-foreground transition-colors flex items-center gap-2"
+                  >
+                    <s.icon className="w-4 h-4" />
+                    {s.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
