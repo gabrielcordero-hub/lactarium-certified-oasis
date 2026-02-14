@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import lactariumLogo from "@/assets/lactarium-logo.png";
 
 const socialLinks = [
   { icon: Facebook, href: "https://facebook.com/lactarium", label: "Facebook" },
@@ -13,9 +14,10 @@ const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <span className="text-2xl font-display font-bold text-primary-foreground">
-              LACTARIUM
-            </span>
+            <div className="flex items-center gap-2.5 mb-3">
+              <img src={lactariumLogo} alt="Lactarium logo" className="h-8 w-8 rounded-lg object-contain brightness-0 invert" />
+              <span className="text-xl font-display font-bold text-primary-foreground tracking-wide">LACTARIUM</span>
+            </div>
             <p className="text-sm font-body text-primary-foreground/60 mt-3 max-w-xs">
               Espacios seguros y certificados para una mejor lactancia. Fabricados en Monterrey, Nuevo León.
             </p>
