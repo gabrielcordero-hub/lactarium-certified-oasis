@@ -1,33 +1,13 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { translations } from "@/i18n/translations";
 
-const steps = [
-  {
-    number: "01",
-    title: "Evaluación del espacio",
-    description:
-      "Determina el área donde se instalará el lactario. Puede ser en oficinas, hospitales, universidades o cualquier espacio público.",
-  },
-  {
-    number: "02",
-    title: "Diseño personalizado",
-    description:
-      "Consultamos contigo las opciones de diseño y personalización del módulo según tus preferencias de espacio, colores y características.",
-  },
-  {
-    number: "03",
-    title: "Fabricación e instalación",
-    description:
-      "Fabricamos con materiales hipoalergénicos de primera calidad e instalamos el lactario en tu espacio de forma rápida y profesional.",
-  },
-  {
-    number: "04",
-    title: "Seguimiento y mantenimiento",
-    description:
-      "Ofrecemos mantenimiento continuo y seguimiento después de la instalación para garantizar el óptimo funcionamiento.",
-  },
-];
+const stepNumbers = ["01", "02", "03", "04"];
 
 const Process = () => {
+  const { t } = useLanguage();
+  const p = translations.process;
+
   return (
     <section id="proceso" className="py-24 bg-muted">
       <div className="container mx-auto px-6">
@@ -39,17 +19,17 @@ const Process = () => {
           className="text-center mb-16"
         >
           <span className="text-sm font-body font-semibold text-primary uppercase tracking-widest">
-            Nosotros te guiamos
+            {t(p.label)}
           </span>
           <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground mt-3">
-            ¿Cómo funciona?
+            {t(p.title)}
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {steps.map((step, index) => (
+          {p.steps.map((step, index) => (
             <motion.div
-              key={step.number}
+              key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -57,13 +37,13 @@ const Process = () => {
               className="relative"
             >
               <span className="text-6xl font-display font-bold text-primary/10">
-                {step.number}
+                {stepNumbers[index]}
               </span>
               <h3 className="text-lg font-display font-bold text-foreground mt-2 mb-2">
-                {step.title}
+                {t(step.title)}
               </h3>
-              <p className="text-sm font-body text-muted-foreground">{step.description}</p>
-              {index < steps.length - 1 && (
+              <p className="text-sm font-body text-muted-foreground">{t(step.description)}</p>
+              {index < p.steps.length - 1 && (
                 <div className="hidden lg:block absolute top-8 right-0 translate-x-1/2 w-12 h-px bg-primary/20" />
               )}
             </motion.div>

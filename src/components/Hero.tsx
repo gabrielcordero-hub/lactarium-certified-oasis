@@ -1,8 +1,13 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import heroImage from "@/assets/hero-lactarium.jpg";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { translations } from "@/i18n/translations";
 
 const Hero = () => {
+  const { t } = useLanguage();
+  const h = translations.hero;
+
   return (
     <section id="inicio" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background image */}
@@ -24,7 +29,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent font-body text-sm font-semibold mb-6 border border-accent/30">
-              Certificados por OMS · UNICEF · Secretaría de Salud NL
+              {t(h.badge)}
             </span>
           </motion.div>
 
@@ -34,8 +39,8 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-primary-foreground leading-tight mb-6"
           >
-            Espacios seguros para una{" "}
-            <span className="text-accent">mejor lactancia</span>
+            {t(h.title1)}{" "}
+            <span className="text-accent">{t(h.title2)}</span>
           </motion.h1>
 
           <motion.p
@@ -44,8 +49,7 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="text-lg md:text-xl font-body text-primary-foreground/80 mb-10 max-w-lg"
           >
-            Somos los primeros en México con lactarios modulares certificados internacionalmente. 
-            Materiales hipoalergénicos y de primera calidad.
+            {t(h.subtitle)}
           </motion.p>
 
           <motion.div
@@ -58,13 +62,13 @@ const Hero = () => {
               href="#productos"
               className="px-8 py-4 rounded-full bg-primary text-primary-foreground font-body font-semibold text-center hover:opacity-90 transition-opacity"
             >
-              Conoce nuestros productos
+              {t(h.ctaProducts)}
             </a>
             <a
               href="#contacto"
               className="px-8 py-4 rounded-full border-2 border-primary-foreground/30 text-primary-foreground font-body font-semibold text-center hover:bg-primary-foreground/10 transition-colors"
             >
-              Solicitar cotización
+              {t(h.ctaQuote)}
             </a>
           </motion.div>
         </div>
