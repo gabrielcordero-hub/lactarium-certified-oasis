@@ -66,7 +66,7 @@ const Contact = () => {
                 <div>
                   <h4 className="font-body font-semibold text-foreground">{t(c.phone)}</h4>
                   <p className="text-sm font-body text-muted-foreground mt-1">
-                    +52 (81) 1234-5678
+                    +52 81 8253 6954 / 81 1628 4852
                   </p>
                 </div>
               </div>
